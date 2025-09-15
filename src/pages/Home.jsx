@@ -31,7 +31,7 @@ const Home = () => {
   return (
     <div className="container mx-auto mt-[48px] md:mt-[80px]">
       <div className="text-left mx-auto md:text-center flex flex-col items-start md:items-center px-4">
-        <h1 className="relative text-[#163A34] text-[32.5px] sm:text-[64px] md:text-[72px] font-[800] leading-none">
+        <h1 className="-z-99 outline-none relative text-[#163A34] text-[32.5px] sm:text-[64px] md:text-[72px] font-[800] leading-none">
           <span className="relative inline-block">
             Healthy
             <div className="absolute left-0 bottom-0 w-full h-[17px] sm:h-[30px] md:h-[39px] bg-[#F9D3BB] rounded-[4px] -z-10"></div>

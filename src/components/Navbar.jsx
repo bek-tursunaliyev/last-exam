@@ -14,7 +14,7 @@ function Navbar() {
         </Link>
 
         {/* Desktop links */}
-        <ul className="hidden md:flex gap-10 items-center font-semibold text-lg">
+        <ul className="hidden z-999 md:flex gap-10 items-center font-semibold text-lg">
           <li>
             <NavLink to="/">Home</NavLink>
           </li>
