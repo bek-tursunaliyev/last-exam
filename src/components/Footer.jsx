@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="container mx-auto px-4 sm:px-6">
+    <footer className="container mx-auto px-4 sm:px-6 -z-999!">
       <div class="relative w-full  mx-auto overflow-hidden bg-[#E9EDE8] rounded-xl flex flex-col items-center gap-10 py-20 px-6">
         <img
           src="/pattern-fork.svg"

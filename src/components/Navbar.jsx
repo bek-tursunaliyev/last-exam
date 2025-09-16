@@ -6,7 +6,7 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="border-b border-[#E0E6E3]">
+    <nav className="border-b border-[#E0E6E3] z-999">
       <div className="container mx-auto flex justify-between items-center py-2.5 px-4 relative">
         {/* Logo */}
         <Link to="/">

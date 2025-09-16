@@ -1,6 +1,19 @@
 @import "tailwindcss";
 /* nunito-sans-regular - latin */
 
+::-webkit-scrollbar {
+  width: 10px;
+  background: transparent;
+}
+::-webkit-scrollbar-track {
+  background: #e9ede8;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #163a34;
+  border-radius: 3px;
+}
+
 :root {
   --font-primary: "Nunito Sans", sans-serif;
 
@@ -65,9 +78,6 @@ body {
   font-size: var(--fs-prese t-6);
   line-height: var(--lh-preset-6);
   background: var(--color-neutral-100);
-
-
-  
 }
 
 #root {
