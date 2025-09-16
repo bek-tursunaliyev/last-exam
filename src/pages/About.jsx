@@ -56,7 +56,7 @@ function About() {
           <h1 className="text-5xl text-[40px] text-[#163A34] font-[800]">Why we exist</h1>
         </div>
 
-        <div className="max-w-[700p4] ">
+        <div className="max-w-[700px] ">
           <div className="flex flex-col gap-12">
             <div className="flex flex-col gap-3">
               <div className="flex gap-5 text-[#163A34] text-[20px] items-center">
