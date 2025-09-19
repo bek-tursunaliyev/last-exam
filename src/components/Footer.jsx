@@ -17,7 +17,7 @@ function Footer() {
           class="absolute z-0 md:right-[-73px] sm:!block !hidden md:top-[24px] md:w-[338.43px] md:h-[338.43px] right-[-48px] -top-[50px] w-[171.78px] h-[171.78px] select-none"
         />
 
-        <div class="relative z-10 flex flex-col items-center gap-3 text-center">
+        <div class="relative flex flex-col items-center gap-3 text-center">
           <h1 class="font-extrabold text-[48px] leading-[120%] tracking-[-2px] text-[#163A34]">
             Ready to cook smarter?
           </h1>
