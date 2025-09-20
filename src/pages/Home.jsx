@@ -70,7 +70,7 @@ const Home = () => {
 
           {/* Fallback */}
           <img
-            src="/image-home-hero-small.webp"
+            src="/image-home-hero-large.webp"
             alt="Home Hero"
             className="w-full h-auto rounded-lg"
           />
