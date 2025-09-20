@@ -22,7 +22,6 @@ export function useFetch() {
     }
   };
 
-  // POST data (FormData bilan)
   const createData = async (formData) => {
     try {
       const res = await axios.post(`${BASE_URL}/create`, formData, {
@@ -30,7 +29,6 @@ export function useFetch() {
           "Content-Type": "multipart/form-data",
         },
       });
-      // Yangi data qo‘shilgandan keyin local state'ga qo‘shamiz
       setData((prev) => [...prev, res.data]);
     } catch (err) {
       console.error("POST xatolik:", err);

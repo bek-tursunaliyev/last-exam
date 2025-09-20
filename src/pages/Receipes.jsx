@@ -1,5 +1,4 @@
 import {
-  LucideDelete,
   LucidePlus,
   LucideSearch,
   LucideTrash2,
@@ -81,7 +80,6 @@ function Recipes() {
   const handleDelete = async (id) => {
     try {
       await deleteData(id);
-      // O'chirilgandan keyin UI avtomatik yangilanadi, chunki useFetch ichida state o‘zgargan
     } catch (err) {
       console.error("Error deleting recipe:", err);
     }
@@ -341,7 +339,7 @@ function Recipes() {
             <div className="flex flex-col items-start gap-4 w-full">
               <div className="h-[300px] overflow-hidden flex items-center justify-center rounded-[10px] w-full">
                 <img
-                  src={recipe.imageUrl || recipe.url || recipe.filePath || ""}
+                  src={recipe.imageUrl}
                   alt={recipe.title}
                   className="object-cover w-full h-full"
                 />
