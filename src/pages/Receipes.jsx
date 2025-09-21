@@ -372,7 +372,7 @@ function Recipes() {
             <div className="flex gap-2 w-full">
               <Link
                 to={`/recipe/${recipe.id}`}
-                state={{ recipe }} 
+                state={{ recipe }}
                 className="flex hover:bg-[#395852] justify-center items-center w-full px-8 py-3 bg-[#163A34] rounded-full 
                 border-2 border-transparent active:border-white active:outline-2 active:bg-[#163A34] active:outline-[#163A34]"
               >
