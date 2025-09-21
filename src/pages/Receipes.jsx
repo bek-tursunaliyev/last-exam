@@ -1,9 +1,9 @@
 import { LucidePlus, LucideSearch, LucideTrash2 } from "lucide-react";
 import React, { useState } from "react";
-import { useFetch } from "../hooks/useFetch"; // Adjust path as needed
+import { useFetch } from "../hooks/useFetch";
 import Lottie from "lottie-react";
 import forkKnifeAnim from "/public/loading.json";
-import defaultFoods from "../../data/db.json"; // Adjust path as needed
+import defaultFoods from "../../data/db.json";
 import { Link } from "react-router-dom";
 
 function Recipes() {
@@ -29,21 +29,19 @@ function Recipes() {
   const prepOptions = [0, 5, 10];
   const cookOptions = [0, 5, 10, 15, 20];
 
-  // Combine defaultFoods.recipes and fetched recipes
   const combinedRecipes = [
     ...(defaultFoods.recipes || []).map((food) => ({
       ...food,
-      overwiev: food.overview || "No description available",
-      imageUrl: food.image?.small || "/placeholder.jpg", // Fallback image
+      overwiev: food.overview || "No description is available",
+      imageUrl: food.image?.small || "no image",
     })),
     ...(recipes || []).map((recipe) => ({
       ...recipe,
-      imageUrl: recipe.imageUrl ? `https://${recipe.imageUrl}` : "/placeholder.jpg", // Fallback image
-      overwiev: recipe.overwiev || "No description available",
+      imageUrl: recipe.imageUrl ? `https://${recipe.imageUrl}` : "no image",
+      overwiev: recipe.overwiev || "No description is available",
     })),
   ];
 
-  // Filter and search logic for combined recipes
   const filteredRecipes = combinedRecipes.filter((recipe) => {
     const matchesSearch =
       recipe.title?.toLowerCase().includes(search.toLowerCase()) ||
@@ -131,7 +129,6 @@ function Recipes() {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 mt-[64px] mb-[24px]">
-      {/* Header, Filters, Modal unchanged */}
       <div className="flex flex-col items-center lg:text-center mx-auto gap-3 max-w-[760px]">
         <h2 className="font-extrabold text-[48px] leading-[120%] tracking-[-0.05em] text-[#163A34]">
           Explore our simple, healthy recipes
@@ -152,9 +149,9 @@ function Recipes() {
                 setOpenPrep(!openPrep);
                 setOpenCook(false);
               }}
-              className="flex items-center justify-between px-4 py-2 w-full h-[47px] bg-white border border-[#E0E6E3] rounded-[10px]"
+              className="flex items-center justify-between px-4 py-2 lg:py-2.5 w-full bg-white border border-[#E0E6E3] rounded-[10px]"
             >
-              <span className="font-semibold text-[16px] text-[#163A34]">
+              <span className="font-semibold text-[14px] lg:text-[16px] text-[#163A34]">
                 {prepSelected ? `${prepSelected} minutes` : prepLabel}
               </span>
               <svg width="20" height="20" fill="none" stroke="currentColor">
@@ -194,9 +191,9 @@ function Recipes() {
                 setOpenCook(!openCook);
                 setOpenPrep(false);
               }}
-              className="flex items-center justify-between px-4 py-2.5 w-full bg-white border border-[#E0E6E3] rounded-[10px]"
+              className="flex items-center justify-between px-4 py-2 lg:py-2.5 w-full bg-white border border-[#E0E6E3] rounded-[10px]"
             >
-              <span className="font-semibold text-[16px] text-[#163A34]">
+              <span className="font-semibold text-[14px] lg:text-[16px] text-[#163A34]">
                 {cookSelected ? `${cookSelected} minutes` : cookLabel}
               </span>
               <svg width="20" height="20" fill="none" stroke="currentColor">
@@ -244,7 +241,7 @@ function Recipes() {
           </div>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2 flex items-center gap-1 bg-[#163A34] cursor-pointer text-white rounded-[10px] w-full md:w-auto border-2 border-transparent active:border-white active:outline-2 active:outline-[#163A34]"
+            className="px-4 py-2 flex items-center gap-1 bg-[#163A34] cursor-pointer text-white rounded-[10px] w- md:w-auto border-2 border-transparent active:border-white active:outline-2 active:outline-[#163A34]"
           >
             <LucidePlus /> <span>Add</span>
           </button>
@@ -354,19 +351,19 @@ function Recipes() {
                   <div className="flex flex-row items-center gap-[6px]">
                     <img src="/icon-servings.svg" alt="" />
                     <span className="font-[500] text-[16px] text-[#163A34]">
-                      {recipe.servings || "N/A"} servings
+                      {recipe.servings} servings
                     </span>
                   </div>
                   <div className="flex flex-row items-center gap-[6px]">
                     <img src="/icon-prep-time.svg" alt="" />
                     <span className="font-[500] text-[16px] text-[#163A34]">
-                      {recipe.prepMinutes || "N/A"} min prep
+                      {recipe.prepMinutes} min prep
                     </span>
                   </div>
                   <div className="flex flex-row items-center gap-[6px]">
                     <img src="/icon-cook-time.svg" alt="" />
                     <span className="font-[500] text-[16px] text-[#163A34]">
-                      {recipe.cookMinutes || "N/A"} min cook
+                      {recipe.cookMinutes} min cook
                     </span>
                   </div>
                 </div>
@@ -375,7 +372,7 @@ function Recipes() {
             <div className="flex gap-2 w-full">
               <Link
                 to={`/recipe/${recipe.id}`}
-                state={{ recipe }} // Pass recipe data via state
+                state={{ recipe }} 
                 className="flex hover:bg-[#395852] justify-center items-center w-full px-8 py-3 bg-[#163A34] rounded-full 
                 border-2 border-transparent active:border-white active:outline-2 active:bg-[#163A34] active:outline-[#163A34]"
               >

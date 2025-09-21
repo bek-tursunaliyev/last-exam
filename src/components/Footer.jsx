@@ -18,7 +18,7 @@ function Footer() {
         />
 
         <div className="relative flex flex-col items-center gap-3 text-center">
-          <h1 className="font-extrabold text-[48px] leading-[120%] tracking-[-2px] text-[#163A34]">
+          <h1 className="font-extrabold text-[40px] md:text-[48px] leading-[120%] tracking-[-2px] text-[#163A34]">
             Ready to cook smarter?
           </h1>
           <p className="font-medium text-[20px] leading-[150%] tracking-[-0.4px] text-[#395852] max-w-[600px]">

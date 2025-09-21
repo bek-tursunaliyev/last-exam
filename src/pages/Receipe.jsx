@@ -1,4 +1,3 @@
-import React from "react";
 import { useLocation } from "react-router-dom";
 import data from "../../data/db.json";
 
@@ -13,7 +12,7 @@ function Receipe() {
   if (!recipe) {
     return (
       <div className="container mx-auto px-4 sm:px-6 mt-[64px] mb-[24px]">
-        <div>Error: Recipe not found</div>
+        <div className="text-center text-6xl text-[#163A34] mx-auto w-full">Error: Recipe not found</div>
       </div>
     );
   }
