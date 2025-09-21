@@ -1,9 +1,10 @@
 import { LucidePlus, LucideSearch, LucideTrash2 } from "lucide-react";
 import React, { useState } from "react";
-import { useFetch } from "../hooks/useFetch";
+import { useFetch } from "../hooks/useFetch"; // Adjust path as needed
 import Lottie from "lottie-react";
 import forkKnifeAnim from "/public/loading.json";
-import defaultFoods from "../../data/db.json";
+import defaultFoods from "../../data/db.json"; // Adjust path as needed
+import { Link } from "react-router-dom";
 
 function Recipes() {
   const { data: recipes, loading, error, createData, deleteData } = useFetch();
@@ -17,8 +18,6 @@ function Recipes() {
     file: null,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // filters + search
   const [openPrep, setOpenPrep] = useState(false);
   const [openCook, setOpenCook] = useState(false);
   const [prepSelected, setPrepSelected] = useState("");
@@ -29,6 +28,39 @@ function Recipes() {
   const cookLabel = "Max Cook Time";
   const prepOptions = [0, 5, 10];
   const cookOptions = [0, 5, 10, 15, 20];
+
+  // Combine defaultFoods.recipes and fetched recipes
+  const combinedRecipes = [
+    ...(defaultFoods.recipes || []).map((food) => ({
+      ...food,
+      overwiev: food.overview || "No description available",
+      imageUrl: food.image?.small || "/placeholder.jpg", // Fallback image
+    })),
+    ...(recipes || []).map((recipe) => ({
+      ...recipe,
+      imageUrl: recipe.imageUrl ? `https://${recipe.imageUrl}` : "/placeholder.jpg", // Fallback image
+      overwiev: recipe.overwiev || "No description available",
+    })),
+  ];
+
+  // Filter and search logic for combined recipes
+  const filteredRecipes = combinedRecipes.filter((recipe) => {
+    const matchesSearch =
+      recipe.title?.toLowerCase().includes(search.toLowerCase()) ||
+      recipe.overwiev?.toLowerCase().includes(search.toLowerCase());
+
+    const matchesPrep = prepSelected
+      ? prepSelected === "Any" ||
+        Number(recipe.prepMinutes) <= Number(prepSelected)
+      : true;
+
+    const matchesCook = cookSelected
+      ? cookSelected === "Any" ||
+        Number(recipe.cookMinutes) <= Number(cookSelected)
+      : true;
+
+    return matchesSearch && matchesPrep && matchesCook;
+  });
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -47,7 +79,6 @@ function Recipes() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const fd = new FormData();
       fd.append("title", formData.title);
@@ -83,24 +114,6 @@ function Recipes() {
     }
   };
 
-  const filteredRecipes = (recipes || []).filter((recipe) => {
-    const matchesSearch =
-      recipe.title?.toLowerCase().includes(search.toLowerCase()) ||
-      recipe.overwiev?.toLowerCase().includes(search.toLowerCase());
-
-    const matchesPrep = prepSelected
-      ? prepSelected === "Any" ||
-        Number(recipe.prepMinutes) <= Number(prepSelected)
-      : true;
-
-    const matchesCook = cookSelected
-      ? cookSelected === "Any" ||
-        Number(recipe.cookMinutes) <= Number(cookSelected)
-      : true;
-
-    return matchesSearch && matchesPrep && matchesCook;
-  });
-
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -118,7 +131,7 @@ function Recipes() {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 mt-[64px] mb-[24px]">
-      {/* Header */}
+      {/* Header, Filters, Modal unchanged */}
       <div className="flex flex-col items-center lg:text-center mx-auto gap-3 max-w-[760px]">
         <h2 className="font-extrabold text-[48px] leading-[120%] tracking-[-0.05em] text-[#163A34]">
           Explore our simple, healthy recipes
@@ -131,11 +144,8 @@ function Recipes() {
         </p>
       </div>
 
-      {/* Filters + Add */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-8 w-full mx-auto">
-        {/* Filters */}
         <div className="flex flex-col md:flex-row md:items-center gap-4 w-">
-          {/* Prep filter */}
           <div className="relative w-full md:flex-1 min-w-[150px] max-w-full ">
             <button
               onClick={() => {
@@ -147,7 +157,6 @@ function Recipes() {
               <span className="font-semibold text-[16px] text-[#163A34]">
                 {prepSelected ? `${prepSelected} minutes` : prepLabel}
               </span>
-
               <svg width="20" height="20" fill="none" stroke="currentColor">
                 <path d="m6 8 4 4 4-4" />
               </svg>
@@ -179,7 +188,6 @@ function Recipes() {
             )}
           </div>
 
-          {/* Cook filter */}
           <div className="relative w-full md:flex-1 min-w-[184px] max-w-full ">
             <button
               onClick={() => {
@@ -191,7 +199,6 @@ function Recipes() {
               <span className="font-semibold text-[16px] text-[#163A34]">
                 {cookSelected ? `${cookSelected} minutes` : cookLabel}
               </span>
-
               <svg width="20" height="20" fill="none" stroke="currentColor">
                 <path d="m6 8 4 4 4-4" />
               </svg>
@@ -224,7 +231,6 @@ function Recipes() {
           </div>
         </div>
 
-        {/* Search + Add */}
         <div className="flex flex-row items-start md:items-center gap-2 w-full md:w-auto">
           <div className="flex items-center gap-2 px-4 py-2 w-full md:w-[310px] h-[47px] bg-white border border-[#E0E6E3] rounded-[10px]">
             <LucideSearch />
@@ -245,14 +251,12 @@ function Recipes() {
         </div>
       </div>
 
-      {/* Modal for adding */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 px-4">
           <div className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-2xl w-full max-w-md sm:max-w-lg animate-fadeIn">
             <h3 className="text-xl sm:text-2xl font-bold text-[#163A34] mb-6 text-center">
               Add Recipe
             </h3>
-
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <input
                 type="text"
@@ -263,7 +267,6 @@ function Recipes() {
                 className="border border-gray-300 focus:ring-2 focus:ring-[#163A34] focus:outline-none p-2 sm:p-3 rounded-xl text-sm sm:text-base"
                 required
               />
-
               <textarea
                 name="overwiev"
                 placeholder="Short description..."
@@ -272,7 +275,6 @@ function Recipes() {
                 className="border border-gray-300 focus:ring-2 focus:ring-[#163A34] focus:outline-none p-2 sm:p-3 rounded-xl min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
                 required
               />
-
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <input
                   type="number"
@@ -291,7 +293,6 @@ function Recipes() {
                   className="border border-gray-300 focus:ring-2 focus:ring-[#163A34] focus:outline-none p-2 sm:p-3 rounded-xl text-sm sm:text-base"
                 />
               </div>
-
               <input
                 type="number"
                 name="cookMinutes"
@@ -300,14 +301,12 @@ function Recipes() {
                 onChange={handleChange}
                 className="border border-gray-300 focus:ring-2 focus:ring-[#163A34] focus:outline-none p-2 sm:p-3 rounded-xl text-sm sm:text-base"
               />
-
               <input
                 type="file"
                 name="file"
                 onChange={handleChange}
                 className="border border-gray-300 focus:ring-2 focus:ring-[#163A34] focus:outline-none p-2 sm:p-3 rounded-xl text-sm sm:text-base"
               />
-
               <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-4">
                 <button
                   type="button"
@@ -328,82 +327,7 @@ function Recipes() {
         </div>
       )}
 
-      {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-        {defaultFoods.recipes.map((foods) => (
-          <div
-            key={foods.id}
-            className="group flex relative flex-col items-start my-[24px] p-2 gap-4 bg-white border border-[#E0E6E3] rounded-[10px]"
-          >
-            <div className="flex flex-col items-start gap-4 w-full">
-              <div className="h-[300px] overflow-hidden flex items-center justify-center rounded-[10px] w-full">
-                <img
-                  src={foods.image.small}
-                  alt={foods.image.small}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-
-              <div className="flex flex-col items-start px-2 gap-3 w-full">
-                <div className="flex flex-col items-start gap-[10px] w-full">
-                  <h3 className="font-nunito font-bold text-[20px] text-[#163A34]">
-                    {foods.title}
-                  </h3>
-                  <p className="font-[500] line-clamp-1 text-[16px] text-[#395852]">
-                    {foods.overview}
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 items-center gap-x-6 gap-y-2 w-full">
-                  <div className="flex flex-row items-center gap-[6px]">
-                    <img src="/icon-servings.svg" alt="" />
-                    <span className="font-[500] text-[16px] text-[#163A34]">
-                      {foods.servings} servings
-                    </span>
-                  </div>
-
-                  <div className="flex flex-row items-center gap-[6px]">
-                    <img src="/icon-prep-time.svg" alt="" />
-                    <span className="font-[500] text-[16px] text-[#163A34]">
-                      {foods.prepMinutes} min prep
-                    </span>
-                  </div>
-
-                  <div className="flex flex-row items-center gap-[6px]">
-                    <img src="/icon-cook-time.svg" alt="" />
-                    <span className="font-[500] text-[16px] text-[#163A34]">
-                      {foods.cookMinutes} min cook
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-2 w-full">
-              <button className="flex justify-center items-center w-full px-8 py-3 bg-[#163A34] rounded-full">
-                <span className="font-[500] text-[16px] text-white">
-                  View Recipe
-                </span>
-              </button>
-
-              <button
-                onClick={() => handleDelete(foods.id)}
-                className="
-                absolute top-1 right-1
-                opacity-100
-                sm:opacity-0
-                sm:group-hover:opacity-100
-                transition-opacity duration-200
-                flex justify-center items-center
-                p-2 sm:p-3
-                rounded-full bg-[#163A34] text-white
-              "
-              >
-                <LucideTrash2 className="w-4 h-4 sm:w-5 sm:h-5" />
-              </button>
-            </div>
-          </div>
-        ))}
         {filteredRecipes.map((recipe) => (
           <div
             key={recipe.id}
@@ -412,54 +336,53 @@ function Recipes() {
             <div className="flex flex-col items-start gap-4 w-full">
               <div className="h-[300px] overflow-hidden flex items-center justify-center rounded-[10px] w-full">
                 <img
-                  src={`https://${recipe.imageUrl}`}
-                  alt={recipe.imageUrl}
+                  src={recipe.imageUrl}
+                  alt={recipe.title}
                   className="object-cover w-full h-full"
                 />
               </div>
-
               <div className="flex flex-col items-start px-2 gap-3 w-full">
                 <div className="flex flex-col items-start gap-[10px] w-full">
-                  <h3 className="font-nunito font-bold text-[20px] text-[#163A34]">
+                  <h3 className="font-nunito font-bold line-clamp-1 text-[20px] text-[#163A34]">
                     {recipe.title}
                   </h3>
                   <p className="font-[500] line-clamp-1 text-[16px] text-[#395852]">
                     {recipe.overwiev}
                   </p>
                 </div>
-
                 <div className="grid grid-cols-2 items-center gap-x-6 gap-y-2 w-full">
                   <div className="flex flex-row items-center gap-[6px]">
                     <img src="/icon-servings.svg" alt="" />
                     <span className="font-[500] text-[16px] text-[#163A34]">
-                      {recipe.servings} servings
+                      {recipe.servings || "N/A"} servings
                     </span>
                   </div>
-
                   <div className="flex flex-row items-center gap-[6px]">
                     <img src="/icon-prep-time.svg" alt="" />
                     <span className="font-[500] text-[16px] text-[#163A34]">
-                      {recipe.prepMinutes} min prep
+                      {recipe.prepMinutes || "N/A"} min prep
                     </span>
                   </div>
-
                   <div className="flex flex-row items-center gap-[6px]">
                     <img src="/icon-cook-time.svg" alt="" />
                     <span className="font-[500] text-[16px] text-[#163A34]">
-                      {recipe.cookMinutes} min cook
+                      {recipe.cookMinutes || "N/A"} min cook
                     </span>
                   </div>
                 </div>
               </div>
             </div>
-
             <div className="flex gap-2 w-full">
-              <button className="flex justify-center items-center w-full px-8 py-3 bg-[#163A34] rounded-full">
-                <span className="font-[500] text-[16px] text-white">
+              <Link
+                to={`/recipe/${recipe.id}`}
+                state={{ recipe }} // Pass recipe data via state
+                className="flex hover:bg-[#395852] justify-center items-center w-full px-8 py-3 bg-[#163A34] rounded-full 
+                border-2 border-transparent active:border-white active:outline-2 active:bg-[#163A34] active:outline-[#163A34]"
+              >
+                <span className="font-medium text-[16px] text-white">
                   View Recipe
                 </span>
-              </button>
-
+              </Link>
               <button
                 onClick={() => handleDelete(recipe.id)}
                 className="
