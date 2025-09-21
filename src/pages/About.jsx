@@ -53,7 +53,9 @@ function About() {
 
       <div className="mb-16 flex gap-10 lg:flex-row flex-col justify-between border-b pb-[72.57px] border-[#E0E6E3]">
         <div className="max-w-[372px]">
-          <h1 className="text-5xl text-[40px] text-[#163A34] font-[800]">Why we exist</h1>
+          <h1 className="text-5xl text-[40px] text-[#163A34] font-[800]">
+            Why we exist
+          </h1>
         </div>
 
         <div className="max-w-[700px] ">
@@ -148,7 +150,7 @@ function About() {
         </div>
       </div>
 
-      <div class="flex justify-between flex-col lg:flex-row lg:items-center border-b pb-[72.57px] border-[#E0E6E3]  ">
+      <div class="flex justify-between flex-col lg:flex-row lg:items-center pb-[72.57px]">
         <div class="md:text-left flex flex-col gap-6">
           <h1 class="text-4xl font-[800] lg:text-[48px] text-[40px] text-[#163A34]">
             Beyond the plate
