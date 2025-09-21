@@ -45,26 +45,25 @@ function Receipe() {
 
   return (
     <div className="container px-6 sm:px-4 my-[48px] mx-auto">
-      <div className="flex gap-1.5 items-center mb-4 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24">
-        <Link
-          to="/recipes"
-          className="font-[600] text-sm sm:text-base md:text-[18px] text-[#708580]"
-        >
-          Recipes /
-        </Link>
-        <h3 className="text-[#163A34] font-[600] text-sm sm:text-base md:text-[18px] truncate">
-          {recipe.title}
-        </h3>
-      </div>
-
-      <div className="lg:flex-row flex flex-col gap-10 items-start lg:justify-around">
-        <div className="lg:*:w-[580px] w-full lg:h-[580px] overflow-hidden rounded-[10px] flex items-center justify-center">
+      <div className="lg:flex-row flex flex-col gap-10 items-start lg:justify-evenly">
+        <div><div className="flex gap-1.5 items-center mb-4">
+          <Link
+            to="/recipes"
+            className="font-[600] text-sm sm:text-base md:text-[18px] text-[#708580]"
+          >
+            Recipes /
+          </Link>
+          <h3 className="text-[#163A34] font-[600] text-sm sm:text-base md:text-[18px] truncate">
+            {recipe.title}
+          </h3>
+        </div>
+        <div className="lg:*:w-[580px] w-auto lg:h-[580px] overflow-hidden rounded-[10px] flex-col flex items-center justify-center">
           <img
             src={recipe.imageUrl}
             className="w-full h-auto"
             alt={recipe.title}
           />
-        </div>
+        </div></div>
 
         <div className="max-w-[572px] flex flex-col gap-5">
           <h1 className="font-[800] text-[#163A34] text-[40px] lg:text-[48px]">
