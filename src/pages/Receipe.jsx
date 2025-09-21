@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import data from "../../data/db.json";
 
 function Receipe() {
@@ -12,7 +12,9 @@ function Receipe() {
   if (!recipe) {
     return (
       <div className="container mx-auto px-4 sm:px-6 mt-[64px] mb-[24px]">
-        <div className="text-center text-6xl text-[#163A34] mx-auto w-full">Error: Recipe not found</div>
+        <div className="text-center text-6xl text-[#163A34] mx-auto w-full">
+          Error: Recipe not found
+        </div>
       </div>
     );
   }
@@ -43,15 +45,20 @@ function Receipe() {
 
   return (
     <div className="container px-6 sm:px-4 my-[48px] mx-auto">
-      <div className="flex gap-1.5 items-center mb-4">
-        <h3 className="font-[600] text-[18px] text-[#708580]">Recipes /</h3>
-        <h3 className="text-[#163A34] font-[600] text-[18px]">
+      <div className="flex gap-1.5 items-center mb-4 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24">
+        <Link
+          to="/recipes"
+          className="font-[600] text-sm sm:text-base md:text-[18px] text-[#708580]"
+        >
+          Recipes /
+        </Link>
+        <h3 className="text-[#163A34] font-[600] text-sm sm:text-base md:text-[18px] truncate">
           {recipe.title}
         </h3>
       </div>
 
-      <div className="flex gap-10">
-        <div className="*:w-[580px] h-[580px] overflow-hidden rounded-[10px] flex items-center justify-center">
+      <div className="lg:flex-row flex flex-col gap-10 items-start lg:justify-around">
+        <div className="lg:*:w-[580px] w-full lg:h-[580px] overflow-hidden rounded-[10px] flex items-center justify-center">
           <img
             src={recipe.imageUrl}
             className="w-full h-auto"
@@ -60,13 +67,13 @@ function Receipe() {
         </div>
 
         <div className="max-w-[572px] flex flex-col gap-5">
-          <h1 className="font-[800] text-[#163A34] text-[48px]">
+          <h1 className="font-[800] text-[#163A34] text-[40px] lg:text-[48px]">
             {recipe.title}
           </h1>
           <p className="text-[20px] text-[#395852]">
             {recipe.overview || recipe.overwiev || "No description available"}
           </p>
-          <div className="flex items-center gap-x-6 gap-y-2 w-full">
+          <div className="sm:flex grid grid-cols-2 items-center gap-x-6 gap-y-2 w-full">
             <div className="flex flex-row items-center gap-[6px]">
               <img src="/icon-servings.svg" alt="Servings icon" />
               <span className="font-[500] text-[16px] text-[#163A34]">
