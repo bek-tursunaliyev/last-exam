@@ -27,17 +27,15 @@ function Footer() {
         </div>
 
         <Link
-          to="/"
-          className="flex items-center justify-center px-6 py-4 w-[176px] h-[57px] bg-[#163A34] text-white text-[18px] font-bold leading-[140%] rounded-[10px] z-20"
+          to="/recipes"
+          className="block mt-4 text-center text-white px-4 py-2 bg-[#163A34] rounded-[10px] border-2 border-transparent active:border-white active:outline-2 active:outline-[#163A34]"
         >
           Get Started
         </Link>
       </div>
 
       <div className="w-full mx-auto sm:flex sm:flex-row sm:gap-0 gap-6 flex-col-reverse flex items-center justify-between py-[40px] mt-12">
-        <div className="text-[#163A34] text-[16px]">
-          Made with ❤️ and 🥑
-        </div>
+        <div className="text-[#163A34] text-[16px]">Made with ❤️ and 🥑</div>
 
         <div className="flex flex-row items-center gap-[24px]">
           <Link to="/" aria-label="Instagram">

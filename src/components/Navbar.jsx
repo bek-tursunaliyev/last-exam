@@ -64,8 +64,7 @@ function Navbar() {
             </ul>
             <Link
               to="/recipes"
-              onClick={() => setIsOpen(false)}
-              className="block mt-4 text-center text-white px-4 py-2 bg-[#163A34] rounded-[10px]"
+              className="block mt-4 text-center text-white px-4 py-2 bg-[#163A34] rounded-[10px] border-2 border-transparent active:border-white active:outline-2 active:outline-[#163A34]"
             >
               Browse recipes
             </Link>

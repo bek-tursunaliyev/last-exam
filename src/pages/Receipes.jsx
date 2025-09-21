@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 import Lottie from "lottie-react";
 import forkKnifeAnim from "/public/loading.json";
+import defaultFoods from "../../data/db.json";
+
 function Recipes() {
   const { data: recipes, loading, error, createData, deleteData } = useFetch();
 
@@ -23,8 +25,8 @@ function Recipes() {
   const [cookSelected, setCookSelected] = useState("");
   const [search, setSearch] = useState("");
 
-  const prepLabel = "Prep time";
-  const cookLabel = "Cook time";
+  const prepLabel = "Max Prep Time";
+  const cookLabel = "Max Cook Time";
   const prepOptions = [0, 5, 10];
   const cookOptions = [0, 5, 10, 15, 20];
 
@@ -132,7 +134,7 @@ function Recipes() {
       {/* Filters + Add */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-8 w-full mx-auto">
         {/* Filters */}
-        <div className="flex flex-col md:flex-row md:items-center gap-4 w-full!">
+        <div className="flex flex-col md:flex-row md:items-center gap-4 w-">
           {/* Prep filter */}
           <div className="relative w-full md:flex-1 min-w-[150px] max-w-full ">
             <button
@@ -178,13 +180,13 @@ function Recipes() {
           </div>
 
           {/* Cook filter */}
-          <div className="relative w-full md:flex-1 min-w-[150px] max-w-full ">
+          <div className="relative w-full md:flex-1 min-w-[184px] max-w-full ">
             <button
               onClick={() => {
                 setOpenCook(!openCook);
                 setOpenPrep(false);
               }}
-              className="flex items-center justify-between px-4 py-2 w-full h-[47px] bg-white border border-[#E0E6E3] rounded-[10px]"
+              className="flex items-center justify-between px-4 py-2.5 w-full bg-white border border-[#E0E6E3] rounded-[10px]"
             >
               <span className="font-semibold text-[16px] text-[#163A34]">
                 {cookSelected ? `${cookSelected} minutes` : cookLabel}
@@ -236,7 +238,7 @@ function Recipes() {
           </div>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2 flex items-center gap-1 bg-[#163A34] cursor-pointer text-white rounded-[10px] -full md:w-auto"
+            className="px-4 py-2 flex items-center gap-1 bg-[#163A34] cursor-pointer text-white rounded-[10px] w-full md:w-auto border-2 border-transparent active:border-white active:outline-2 active:outline-[#163A34]"
           >
             <LucidePlus /> <span>Add</span>
           </button>
@@ -328,6 +330,80 @@ function Recipes() {
 
       {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        {defaultFoods.recipes.map((foods) => (
+          <div
+            key={foods.id}
+            className="group flex relative flex-col items-start my-[24px] p-2 gap-4 bg-white border border-[#E0E6E3] rounded-[10px]"
+          >
+            <div className="flex flex-col items-start gap-4 w-full">
+              <div className="h-[300px] overflow-hidden flex items-center justify-center rounded-[10px] w-full">
+                <img
+                  src={foods.image.small}
+                  alt={foods.image.small}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+
+              <div className="flex flex-col items-start px-2 gap-3 w-full">
+                <div className="flex flex-col items-start gap-[10px] w-full">
+                  <h3 className="font-nunito font-bold text-[20px] text-[#163A34]">
+                    {foods.title}
+                  </h3>
+                  <p className="font-[500] line-clamp-1 text-[16px] text-[#395852]">
+                    {foods.overview}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 items-center gap-x-6 gap-y-2 w-full">
+                  <div className="flex flex-row items-center gap-[6px]">
+                    <img src="/icon-servings.svg" alt="" />
+                    <span className="font-[500] text-[16px] text-[#163A34]">
+                      {foods.servings} servings
+                    </span>
+                  </div>
+
+                  <div className="flex flex-row items-center gap-[6px]">
+                    <img src="/icon-prep-time.svg" alt="" />
+                    <span className="font-[500] text-[16px] text-[#163A34]">
+                      {foods.prepMinutes} min prep
+                    </span>
+                  </div>
+
+                  <div className="flex flex-row items-center gap-[6px]">
+                    <img src="/icon-cook-time.svg" alt="" />
+                    <span className="font-[500] text-[16px] text-[#163A34]">
+                      {foods.cookMinutes} min cook
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-2 w-full">
+              <button className="flex justify-center items-center w-full px-8 py-3 bg-[#163A34] rounded-full">
+                <span className="font-[500] text-[16px] text-white">
+                  View Recipe
+                </span>
+              </button>
+
+              <button
+                onClick={() => handleDelete(foods.id)}
+                className="
+                absolute top-1 right-1
+                opacity-100
+                sm:opacity-0
+                sm:group-hover:opacity-100
+                transition-opacity duration-200
+                flex justify-center items-center
+                p-2 sm:p-3
+                rounded-full bg-[#163A34] text-white
+              "
+              >
+                <LucideTrash2 className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+            </div>
+          </div>
+        ))}
         {filteredRecipes.map((recipe) => (
           <div
             key={recipe.id}
