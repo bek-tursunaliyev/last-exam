@@ -75,7 +75,7 @@ picture {
 body {
   height: 100%;
   font-family: var(--font-primary);
-  font-size: var(--fs-prese t-6);
+  font-size: var(--fs-preset-6);
   line-height: var(--lh-preset-6);
   background: var(--color-neutral-100);
 }
