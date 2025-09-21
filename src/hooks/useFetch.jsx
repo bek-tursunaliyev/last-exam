@@ -39,7 +39,7 @@ export function useFetch() {
   // DELETE
   const deleteData = async (id) => {
     try {
-      await axios.delete(`${BASE_URL}/${id}`);
+      await axios.delete(`${BASE_URL}/delete/${id}`);
       setData((prev) => prev.filter((item) => item.id !== id));
     } catch (err) {
       console.error("DELETE xatolik:", err);

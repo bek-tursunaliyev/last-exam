@@ -1,8 +1,4 @@
-import {
-  LucidePlus,
-  LucideSearch,
-  LucideTrash2,
-} from "lucide-react";
+import { LucidePlus, LucideSearch, LucideTrash2 } from "lucide-react";
 import React, { useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 import Lottie from "lottie-react";
@@ -135,9 +131,10 @@ function Recipes() {
 
       {/* Filters + Add */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-8 w-full mx-auto">
-        {/* Prep filter */}
-        <div className="flex flex-wrap items-center gap-4 w-full">
-          <div className="relative flex-1 min-w-[150px] max-w-full sm:max-w-[200px]">
+        {/* Filters */}
+        <div className="flex flex-col md:flex-row md:items-center gap-4 w-full!">
+          {/* Prep filter */}
+          <div className="relative w-full md:flex-1 min-w-[150px] max-w-full ">
             <button
               onClick={() => {
                 setOpenPrep(!openPrep);
@@ -181,7 +178,7 @@ function Recipes() {
           </div>
 
           {/* Cook filter */}
-          <div className="relative flex-1 min-w-[150px] max-w-full sm:max-w-[200px]">
+          <div className="relative w-full md:flex-1 min-w-[150px] max-w-full ">
             <button
               onClick={() => {
                 setOpenCook(!openCook);
@@ -226,8 +223,8 @@ function Recipes() {
         </div>
 
         {/* Search + Add */}
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2 px-4 py-2 w-[250px] md:w-[310px] h-[47px] bg-white border border-[#E0E6E3] rounded-[10px]">
+        <div className="flex flex-row items-start md:items-center gap-2 w-full md:w-auto">
+          <div className="flex items-center gap-2 px-4 py-2 w-full md:w-[310px] h-[47px] bg-white border border-[#E0E6E3] rounded-[10px]">
             <LucideSearch />
             <input
               type="text"
@@ -239,7 +236,7 @@ function Recipes() {
           </div>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2 flex items-center gap-1 bg-[#163A34] cursor-pointer text-white rounded-[10px]"
+            className="px-4 py-2 flex items-center gap-1 bg-[#163A34] cursor-pointer text-white rounded-[10px] -full md:w-auto"
           >
             <LucidePlus /> <span>Add</span>
           </button>
@@ -339,8 +336,8 @@ function Recipes() {
             <div className="flex flex-col items-start gap-4 w-full">
               <div className="h-[300px] overflow-hidden flex items-center justify-center rounded-[10px] w-full">
                 <img
-                  src={recipe.imageUrl}
-                  alt={recipe.title}
+                  src={`https://${recipe.imageUrl}`}
+                  alt={recipe.imageUrl}
                   className="object-cover w-full h-full"
                 />
               </div>
